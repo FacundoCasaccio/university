@@ -1,5 +1,5 @@
-create database university;
-use university;
+create database Facundo_Casaccio;
+use Facundo_Casaccio;
 
 CREATE TABLE users(
 	id int not null AUTO_INCREMENT,
@@ -159,6 +159,16 @@ INSERT into students (user_id, enrollment) VALUES (4, 2645973);
 INSERT into students (user_id, enrollment) VALUES (6, 2897453);
 INSERT into students (user_id, enrollment) VALUES (7, 2785723);
 
+-- Altering tables to correct names
+ALTER TABLE carreers RENAME TO careers;
+ALTER TABLE carreer_student RENAME TO career_student;
+ALTER TABLE career_student CHANGE carreer_id career_id int not null;
+ALTER TABLE carreer_subject RENAME TO career_subject;
+ALTER TABLE career_subject CHANGE carreer_id career_id int not null;
+ALTER TABLE proffessors RENAME TO professors;
+ALTER TABLE proffessor_department RENAME TO professor_department;
+ALTER TABLE professor_department CHANGE proffessor_id professor_id int not null;
+
 -- Careers and subjects
 INSERT into careers (title, duration, cost) VALUES ('Physicist', 5, 100000);
 INSERT into careers (title, duration, cost) VALUES ('Literary', 3, 80000);
@@ -171,17 +181,39 @@ INSERT into subjects (name) VALUES ('english');
 INSERT into subjects (name) VALUES ('algebra');
 
 -- Corresponding subjects to each carreer
-INSERT into career_subject (carreer_id, subject_id) VALUES (1, 1);
-INSERT into career_subject (carreer_id, subject_id) VALUES (1, 2);
-INSERT into career_subject (carreer_id, subject_id) VALUES (1, 5);
-INSERT into career_subject (carreer_id, subject_id) VALUES (1, 6);
-INSERT into career_subject (carreer_id, subject_id) VALUES (2, 3);
-INSERT into career_subject (carreer_id, subject_id) VALUES (2, 4);
-INSERT into career_subject (carreer_id, subject_id) VALUES (2, 5);
+INSERT into career_subject (career_id, subject_id) VALUES (1, 1);
+INSERT into career_subject (career_id, subject_id) VALUES (1, 2);
+INSERT into career_subject (career_id, subject_id) VALUES (1, 5);
+INSERT into career_subject (career_id, subject_id) VALUES (1, 6);
+INSERT into career_subject (career_id, subject_id) VALUES (2, 3);
+INSERT into career_subject (career_id, subject_id) VALUES (2, 4);
+INSERT into career_subject (career_id, subject_id) VALUES (2, 5);
 
 -- Students carreers
-INSERT into career_student (carreer_id, student_id) VALUES (2, 1);
-INSERT into career_student (carreer_id, student_id) VALUES (1, 2);
-INSERT into career_student (carreer_id, student_id) VALUES (1, 3);
-INSERT into career_student (carreer_id, student_id) VALUES (2, 3);
-INSERT into career_student (carreer_id, student_id) VALUES (1, 5);
+INSERT into career_student (career_id, student_id) VALUES (2, 1);
+INSERT into career_student (career_id, student_id) VALUES (1, 2);
+INSERT into career_student (career_id, student_id) VALUES (1, 3);
+INSERT into career_student (career_id, student_id) VALUES (2, 3);
+INSERT into career_student (career_id, student_id) VALUES (1, 5);
+
+-- Show students
+SELECT * FROM students;
+
+-- Show students full information
+SELECT s.id, u.name, u.surname, u.email, u.personal_id, s.enrollment FROM users u RIGHT JOIN students s on u.id = s.user_id;
+-- Show all users with and their degrees
+SELECT u.id, u.name, u.surname, p.degree FROM users u LEFT JOIN professors p on u.id = p.user_id;
+
+
+-- Students records
+INSERT INTO academic_record (student_id, subject_id, completed, mark) VALUES (3, 1, true, 10);
+INSERT INTO academic_record (student_id, subject_id, completed, mark) VALUES (4, 1, true, 8);
+INSERT INTO academic_record (student_id, subject_id, completed, mark) VALUES (2, 1, false, 2);
+INSERT INTO academic_record (student_id, subject_id, completed, mark) VALUES (5, 1, false, 5);
+INSERT INTO academic_record (student_id, subject_id, completed, mark) VALUES (1, 1, true, 9);
+
+-- Show students that passed math
+SELECT u.name, u.surname FROM users u 
+	JOIN students st on u.id = st.user_id 
+    JOIN academic_record r on st.id = r.student_id
+    JOIN subjects s on s.id = r.subject_id; 
