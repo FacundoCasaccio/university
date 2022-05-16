@@ -1,8 +1,6 @@
 package dao;
 
-import dao.conection.Conection;
-import domain.Employee;
-import domain.Student;
+import connection.ConnectionPool;
 import domain.Subject;
 
 import java.sql.Connection;
@@ -12,17 +10,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static connection.DAOConnection.getConnectionPool;
+
 public class SubjectDAO implements DAO<Subject> {
+    private ConnectionPool connectionPool = getConnectionPool();
     @Override
     public Subject select(int id) {
         String query = "SELECT id, name FROM subjects WHERE id = " + id;
         Subject subject;
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
+            resultSet.next();
             int subjectId = resultSet.getInt("id");
             String subjectName = resultSet.getString("name");
 
@@ -41,7 +43,7 @@ public class SubjectDAO implements DAO<Subject> {
         Subject subject;
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
@@ -63,7 +65,7 @@ public class SubjectDAO implements DAO<Subject> {
         String query = "INSERT INTO subjects (name) VALUES (?)";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setString(1, subject.getName());
@@ -78,7 +80,7 @@ public class SubjectDAO implements DAO<Subject> {
         String query = "UPDATE subjects SET name = ? WHERE id = " + id;
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setString(1, subject.getName());
@@ -93,7 +95,7 @@ public class SubjectDAO implements DAO<Subject> {
         String query = "DELETE FROM subjects WHERE id = ?";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, subject.getSubjectId());

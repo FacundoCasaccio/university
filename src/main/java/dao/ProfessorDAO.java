@@ -1,6 +1,6 @@
 package dao;
 
-import dao.conection.Conection;
+import connection.ConnectionPool;
 import domain.Professor;
 
 import java.sql.Connection;
@@ -10,17 +10,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static connection.DAOConnection.getConnectionPool;
+
 public class ProfessorDAO implements DAO<Professor> {
+    private ConnectionPool connectionPool = getConnectionPool();
     @Override
     public Professor select(int id) {
         String query = "SELECT p.user_id, p.id, u.name, u.surname, u.email, u.personal_id, p.degree FROM users u JOIN professors p on u.id = p.user_id and p.id = " + id;
         Professor professor;
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
+            resultSet.next();
             int userId = resultSet.getInt("user_id");
             int professorId = resultSet.getInt("id");
             String name = resultSet.getString("name");
@@ -44,7 +48,7 @@ public class ProfessorDAO implements DAO<Professor> {
         Professor professor;
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
@@ -71,7 +75,7 @@ public class ProfessorDAO implements DAO<Professor> {
         String query = "INSERT into professors (user_id, degree) VALUES (?, ?)";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, professor.getUserId());
@@ -87,7 +91,7 @@ public class ProfessorDAO implements DAO<Professor> {
         String query = "UPDATE users u JOIN professors p on u.id = p.user_id SET u.name = ?, u.surname = ?, u.email = ?, u.personal_id = ?, p.degree = ? WHERE u.id = ?";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, professor.getUserId());
@@ -108,7 +112,7 @@ public class ProfessorDAO implements DAO<Professor> {
         String query = "DELETE FROM users u JOIN professors p on u.id = p.user_id WHERE u.id = ?";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, professor.getUserId());

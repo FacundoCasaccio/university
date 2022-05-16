@@ -1,12 +1,13 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Department {
     private int departmentId;
     private String area;
     private Professor head;
-    private ArrayList<Professor> professors;
+    private List<Professor> professors;
 
     public Department() {};
 
@@ -16,7 +17,7 @@ public class Department {
         this.head = head;
     }
 
-    public Department(int departmentId, String area, Professor head, ArrayList<Professor> professors) {
+    public Department(int departmentId, String area, Professor head, List<Professor> professors) {
         this.departmentId = departmentId;
         this.area = area;
         this.head = head;
@@ -43,7 +44,7 @@ public class Department {
         this.head = head;
     }
 
-    public ArrayList<Professor> getProfessors() {
+    public List<Professor> getProfessors() {
         return professors;
     }
 

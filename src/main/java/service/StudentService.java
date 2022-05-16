@@ -2,6 +2,7 @@ package service;
 
 import dao.ExamDAO;
 import dao.StudentDAO;
+import domain.Exam;
 import domain.Student;
 
 import java.util.Comparator;
@@ -13,6 +14,14 @@ public class StudentService {
 
     public Student getStudentById(int id) {
         return this.studentDAO.select(id);
+    }
+
+    public Student getFullStudentInfoById(int id) {
+        ExamDAO examDAO = new ExamDAO();
+
+        Student student = this.studentDAO.select(id);
+        student.setExams(retrieveExams(student));
+        return student;
     }
 
     public List<Student> getAllStudents() {
@@ -37,14 +46,14 @@ public class StudentService {
         this.studentDAO.delete(student);
     }
 
-    public Student retrieveExams(Student student) {
+    public List<Exam> retrieveExams(Student student) {
         ExamDAO examDAO = new ExamDAO();
 
-        student.setExams(examDAO.selectAll().stream()
+        List<Exam> exams = examDAO.selectAll().stream()
                 .filter( exam -> exam.getStudent_id() == student.getStudentId())
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
 
-        return student;
+        return exams;
     }
 
 }

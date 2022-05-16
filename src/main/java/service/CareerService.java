@@ -2,7 +2,10 @@ package service;
 
 import dao.CareerDAO;
 import dao.StudentDAO;
+import dao.SubjectDAO;
 import domain.Career;
+import domain.Student;
+import domain.Subject;
 
 import java.util.Comparator;
 import java.util.List;
@@ -37,13 +40,12 @@ public class CareerService {
         this.careerDAO.delete(career);
     }
 
-    public Career retrieveStudents(Career career) {
-        StudentDAO studentDAO = new StudentDAO();
-
-        career.setStudents(studentDAO.selectAll().stream()
-                .filter( student -> student.getCareer().getTitle().equalsIgnoreCase( career.getTitle() ) )
-                .collect(Collectors.toList()) );
-
-        return career;
+    public List<Subject> retrieveSubjects(Career career) {
+        return this.careerDAO.selectCareerSubjects(career);
     }
+
+    public List<Student> retrieveStudents(Career career) {
+        return this.careerDAO.selectCareerStudents(career);
+    }
+
 }

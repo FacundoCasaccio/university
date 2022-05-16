@@ -4,16 +4,17 @@ import java.util.Map;
 
 public class AcademicRecord {
     private int recordId;
-    private Student student;
+    private int studentId;
+    
     private Map<Subject, Double> subjectsHistory;
 
     public AcademicRecord() {
 
     }
 
-    public AcademicRecord(int recordId, Student student) {
+    public AcademicRecord(int recordId, int studentId) {
         this.recordId = recordId;
-        this.student = student;
+        this.studentId = studentId;
     }
 
     public int getRecordId() {
@@ -24,12 +25,12 @@ public class AcademicRecord {
         this.recordId = recordId;
     }
 
-    public Student getStudent() {
-        return student;
+    public int getStudentId() {
+        return studentId;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setStudentId(int id) {
+        this.studentId = id;
     }
 
     public Map<Subject, Double> getSubjectsHistory() {

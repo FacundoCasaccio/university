@@ -1,6 +1,6 @@
 package dao;
 
-import dao.conection.Conection;
+import connection.ConnectionPool;
 import domain.Employee;
 
 import java.sql.Connection;
@@ -10,17 +10,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static connection.DAOConnection.getConnectionPool;
+
 public class EmployeeDAO implements DAO<Employee> {
+    private ConnectionPool connectionPool = getConnectionPool();
     @Override
     public Employee select(int id) {
         String query = "SELECT e.user_id, e.id, u.name, u.surname, u.email, u.personal_id, e.position FROM users u JOIN employees e on u.id = e.user_id and e.id = " + id;
         Employee employee;
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
+            resultSet.next();
             int userId = resultSet.getInt("user_id");
             int professorId = resultSet.getInt("id");
             String name = resultSet.getString("name");
@@ -44,7 +48,7 @@ public class EmployeeDAO implements DAO<Employee> {
         Employee employee;
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
@@ -71,7 +75,7 @@ public class EmployeeDAO implements DAO<Employee> {
         String query = "INSERT into employees (user_id, position) VALUES (?, ?)";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, employee.getUserId());
@@ -87,7 +91,7 @@ public class EmployeeDAO implements DAO<Employee> {
         String query = "UPDATE users u JOIN employees e on u.id = e.user_id SET u.name = ?, u.surname = ?, u.email = ?, u.personal_id = ?, e.position = ? WHERE u.id = ?";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, employee.getUserId());
@@ -108,7 +112,7 @@ public class EmployeeDAO implements DAO<Employee> {
         String query = "DELETE FROM users u JOIN employees e on u.id = e.user_id WHERE u.id = ?";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, employee.getUserId());

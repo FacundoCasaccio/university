@@ -1,6 +1,6 @@
 package dao;
 
-import dao.conection.Conection;
+import connection.ConnectionPool;
 import domain.Student;
 
 import java.sql.Connection;
@@ -10,17 +10,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static connection.DAOConnection.getConnectionPool;
+
 public class StudentDAO implements DAO<Student> {
+    private ConnectionPool connectionPool = getConnectionPool();
     @Override
     public Student select(int id) {
         String query = "SELECT s.user_id, s.id, u.name, u.surname, u.email, u.personal_id, s.enrollment FROM users u JOIN students s on u.id = s.user_id and s.id = " + id;
         Student student;
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
+            resultSet.next();
             int userId = resultSet.getInt("user_id");
             int studentId = resultSet.getInt("id");
             String name = resultSet.getString("name");
@@ -44,7 +48,7 @@ public class StudentDAO implements DAO<Student> {
         Student student;
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
@@ -71,7 +75,7 @@ public class StudentDAO implements DAO<Student> {
         String query = "INSERT into students (user_id, enrollment) VALUES (?, ?)";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, student.getUserId());
@@ -87,7 +91,7 @@ public class StudentDAO implements DAO<Student> {
         String query = "UPDATE users u JOIN students s on u.id = s.user_id SET u.name = ?, u.surname = ?, u.email = ?, u.personal_id = ?, s.enrollment = ? WHERE u.id = ?";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, student.getUserId());
@@ -108,7 +112,7 @@ public class StudentDAO implements DAO<Student> {
         String query = "DELETE FROM users u JOIN students s on u.id = s.user_id WHERE u.id = ?";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, student.getUserId());

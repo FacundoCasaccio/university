@@ -1,7 +1,6 @@
 package dao;
 
-import dao.conection.Conection;
-import domain.Student;
+import connection.ConnectionPool;
 import domain.User;
 
 import java.sql.Connection;
@@ -11,17 +10,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static connection.DAOConnection.getConnectionPool;
+
 public class UserDAO implements DAO<User>{
+    private ConnectionPool connectionPool = getConnectionPool();
     @Override
     public User select(int id) {
         String query = "SELECT id, name, surname, email, personal_id FROM users WHERE id = "  + id;
         User user;
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
+            resultSet.next();
             int userId = resultSet.getInt("id");
             String name = resultSet.getString("name");
             String surname = resultSet.getString("surname");
@@ -43,7 +46,7 @@ public class UserDAO implements DAO<User>{
         User user;
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
@@ -68,7 +71,7 @@ public class UserDAO implements DAO<User>{
         String query = "INSERT into users (name, surname, email, personal_id) VALUES (?, ?, ?, ?)";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setString(1, user.getName());
@@ -86,7 +89,7 @@ public class UserDAO implements DAO<User>{
         String query = "UPDATE users SET name = ?, surname = ?, email = ?, personal_id = ? WHERE id = ?";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setString(1, user.getName());
@@ -105,7 +108,7 @@ public class UserDAO implements DAO<User>{
         String query = "DELETE FROM users WHERE u.id = ?";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, user.getUserId());

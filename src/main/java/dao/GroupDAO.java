@@ -1,10 +1,7 @@
 package dao;
 
-import dao.conection.Conection;
-import domain.Department;
-import domain.Group;
-import domain.Professor;
-import domain.Subject;
+import connection.ConnectionPool;
+import domain.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static connection.DAOConnection.getConnectionPool;
+
 public class GroupDAO implements DAO<Group>{
+    private ConnectionPool connectionPool = getConnectionPool();
     @Override
     public Group select(int id) {
         String query = "SELECT g.id, g.code, p.user_id, g.head, u.name, u.surname, u.email, u.personal_id, p.degree, g.subject_id, s.name as subject_name FROM group g " +
@@ -26,10 +26,11 @@ public class GroupDAO implements DAO<Group>{
         Subject subject = new Subject();
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
+            resultSet.next();
             //Group info
             int groupId = resultSet.getInt("id");
             String groupCode = resultSet.getString("code");
@@ -68,7 +69,7 @@ public class GroupDAO implements DAO<Group>{
         Subject subject = new Subject();
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
@@ -104,7 +105,7 @@ public class GroupDAO implements DAO<Group>{
         String query = "INSERT INTO groups (code, subject_id, head) VALUES (?, ?, ?)";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setString(1, group.getGroupCode());
@@ -121,7 +122,7 @@ public class GroupDAO implements DAO<Group>{
         String query = "UPDATE groups SET code = ?, subject_id = ? head = ? WHERE id = " + id;
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setString(1, group.getGroupCode());
@@ -138,7 +139,7 @@ public class GroupDAO implements DAO<Group>{
         String query = "DELETE FROM groups WHERE id = ?";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, group.getGroupId());
@@ -146,5 +147,35 @@ public class GroupDAO implements DAO<Group>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Student> selectGroupStudents(Group group) {
+        String query = "SELECT s.user_id, s.id, u.name, u.surname, u.email, u.personal_id, s.enrollment FROM users u " +
+                "RIGHT JOIN students s on u.id = s.user_id " +
+                "JOIN group_student gs on gs.student_id = s.id and gs.group_id = " + group.getGroupId();
+        List<Student> students = new ArrayList<>();
+        Student student;
+
+        try {
+            Connection connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int userId = resultSet.getInt("user_id");
+                int studentId = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String surname = resultSet.getString("surname");
+                String email = resultSet.getString("email");
+                int personalId = resultSet.getInt("personal_id");
+                int enrollment = resultSet.getInt("enrollment");
+
+                student = new Student(userId, name, surname, personalId, email, studentId, enrollment);
+                students.add(student);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return students;
     }
 }

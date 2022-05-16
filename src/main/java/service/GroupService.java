@@ -3,6 +3,7 @@ package service;
 import dao.GroupDAO;
 import dao.StudentDAO;
 import domain.Group;
+import domain.Student;
 
 import java.util.List;
 
@@ -27,6 +28,10 @@ public class GroupService {
 
     public void deleteGroup(Group group) {
         this.groupDAO.delete(group);
+    }
+
+    public List<Student> retrieveGroupStudents(Group group) {
+        return this.groupDAO.selectGroupStudents(group);
     }
 
 }

@@ -1,7 +1,5 @@
 package dao;
 
-import domain.Student;
-
 import java.util.List;
 
 public interface DAO<T> {

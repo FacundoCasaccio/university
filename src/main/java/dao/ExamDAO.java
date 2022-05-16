@@ -1,6 +1,6 @@
 package dao;
 
-import dao.conection.Conection;
+import connection.ConnectionPool;
 import domain.Exam;
 import domain.Subject;
 
@@ -11,7 +11,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static connection.DAOConnection.getConnectionPool;
+
 public class ExamDAO implements DAO<Exam>{
+    private ConnectionPool connectionPool = getConnectionPool();
 
     @Override
     public Exam select(int id) {
@@ -20,10 +23,11 @@ public class ExamDAO implements DAO<Exam>{
         Subject subject = new Subject();
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
+            resultSet.next();
             int examId = resultSet.getInt("id");
             double mark = resultSet.getDouble("mark");
             subject.setSubjectId(resultSet.getInt("subject_id"));
@@ -46,7 +50,7 @@ public class ExamDAO implements DAO<Exam>{
         Subject subject = new Subject();
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
@@ -71,7 +75,7 @@ public class ExamDAO implements DAO<Exam>{
         String query = "INSERT INTO exams (mark, subject_id, student_id) VALUES (?, ?, ?)";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setDouble(1, exam.getMark());
@@ -88,7 +92,7 @@ public class ExamDAO implements DAO<Exam>{
         String query = "UPDATE exams SET mark = ?, student_id = ?, subject_id = ? WHERE id = " + id;
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setDouble(1, exam.getMark());
@@ -105,7 +109,7 @@ public class ExamDAO implements DAO<Exam>{
         String query = "DELETE FROM exams WHERE id = ?";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, exam.getExamId());

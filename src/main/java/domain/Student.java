@@ -5,7 +5,6 @@ import java.util.List;
 public class Student extends User{
     private int studentId;
     private int enrollment;
-    private Career career;
     private List<Exam> exams;
 
     public Student(){}
@@ -32,14 +31,6 @@ public class Student extends User{
         this.enrollment = enrollment;
     }
 
-    public Career getCareer() {
-        return career;
-    }
-
-    public void setCareer(Career career) {
-        this.career = career;
-    }
-
     public List<Exam> getExams() {
         return this.exams;
     }
@@ -50,10 +41,9 @@ public class Student extends User{
 
     @Override
     public String toString() {
-        return "Student{" +
+        return super.toString() + "Student{" +
                 "studentId=" + studentId +
                 ", enrollment=" + enrollment +
-                ", career=" + career +
                 ", exams=" + exams +
                 '}';
     }

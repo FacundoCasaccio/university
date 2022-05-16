@@ -2,6 +2,7 @@ package service;
 
 import dao.DepartmentDAO;
 import domain.Department;
+import domain.Professor;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,6 +34,10 @@ public class DepartmentService {
 
     public void deleteDepartment(Department department) {
         this.departmentDAO.delete(department);
+    }
+
+    public List<Professor> retrieveDepartmentProfessors(Department department) {
+        return this.departmentDAO.selectDepartmentProfessors(department);
     }
 
 }

@@ -1,10 +1,8 @@
 package dao;
 
-import dao.conection.Conection;
-import domain.Career;
+import connection.ConnectionPool;
 import domain.Department;
 import domain.Professor;
-import domain.Subject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +11,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static connection.DAOConnection.getConnectionPool;
+
 public class DepartmentDAO implements DAO<Department> {
+    private ConnectionPool connectionPool = getConnectionPool();
     @Override
     public Department select(int id) {
         String query = "SELECT d.id, d.area, p.user_id, d.head, u.name, u.surname, u.email, u.personal_id, p.degree FROM departments d " +
@@ -23,10 +24,11 @@ public class DepartmentDAO implements DAO<Department> {
         Professor head = new Professor();
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
+            resultSet.next();
             //Department info
             int departmentId = resultSet.getInt("id");
             String area = resultSet.getString("area");
@@ -58,7 +60,7 @@ public class DepartmentDAO implements DAO<Department> {
         Professor head = new Professor();
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
@@ -90,7 +92,7 @@ public class DepartmentDAO implements DAO<Department> {
         String query = "INSERT INTO departments (area, head) VALUES (?, ?)";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setString(1, department.getArea());
@@ -106,7 +108,7 @@ public class DepartmentDAO implements DAO<Department> {
         String query = "UPDATE departments SET area = ?, head = ? WHERE id = " + id;
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setString(1, department.getArea());
@@ -122,7 +124,7 @@ public class DepartmentDAO implements DAO<Department> {
         String query = "DELETE FROM subjects WHERE id = ?";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, department.getDepartmentId());
@@ -131,4 +133,37 @@ public class DepartmentDAO implements DAO<Department> {
             throw new RuntimeException(e);
         }
     }
+
+    public List<Professor> selectDepartmentProfessors(Department department) {
+        String query = "SELECT p.user_id, p.id, u.name, u.surname, u.email, u.personal_id, p.degree FROM users u " +
+                "RIGHT JOIN professors p on u.id = p.user_id " +
+                "JOIN professor_department pd on pd.professor_id = p.id and pd.department_id = " + department.getDepartmentId();
+
+        List<Professor> professors = new ArrayList<>();
+        Professor professor;
+
+        try {
+            Connection connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int userId = resultSet.getInt("user_id");
+                int professorId = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String surname = resultSet.getString("surname");
+                String email = resultSet.getString("email");
+                int personalId = resultSet.getInt("personal_id");
+                String degree = resultSet.getString("degree");
+
+                professor = new Professor(userId, name, surname, personalId, email, professorId, degree);
+                professors.add(professor);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return professors;
+    }
+
+
 }

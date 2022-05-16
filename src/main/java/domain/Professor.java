@@ -31,7 +31,7 @@ public class Professor extends User{
 
     @Override
     public String toString() {
-        return "Professor{" +
+        return super.toString() + "Professor{" +
                 "professorId=" + professorId +
                 ", degree='" + degree + '\'' +
                 '}';

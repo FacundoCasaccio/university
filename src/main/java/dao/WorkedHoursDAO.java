@@ -1,8 +1,6 @@
 package dao;
 
-import dao.conection.Conection;
-import domain.Professor;
-import domain.Subject;
+import connection.ConnectionPool;
 import domain.WorkedHours;
 
 import java.sql.Connection;
@@ -12,17 +10,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static connection.DAOConnection.getConnectionPool;
+
 public class WorkedHoursDAO implements DAO<WorkedHours>{
+    private ConnectionPool connectionPool = getConnectionPool();
     @Override
     public WorkedHours select(int id) {
         String query = "SELECT id, amount, month FROM worked_hours WHERE id = " + id;
         WorkedHours workedHours;
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
+            resultSet.next();
             int workedHoursId = resultSet.getInt("id");
             int amount = resultSet.getInt("amount");
             String month = resultSet.getString("month");
@@ -42,7 +44,7 @@ public class WorkedHoursDAO implements DAO<WorkedHours>{
         WorkedHours workedHours;
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
@@ -65,7 +67,7 @@ public class WorkedHoursDAO implements DAO<WorkedHours>{
         String query = "INSERT INTO worked_hours (amount, professor_id, employee_id, month) VALUES (?, ?, ?, ?)";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, workedHours.getAmount());
@@ -83,7 +85,7 @@ public class WorkedHoursDAO implements DAO<WorkedHours>{
         String query = "UPDATE worked_hours SET amount = ?, professor_id = ?, employee_Id = ?, month = ? WHERE id = " + id;
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, workedHours.getAmount());
@@ -101,7 +103,7 @@ public class WorkedHoursDAO implements DAO<WorkedHours>{
         String query = "DELETE FROM worked_hours WHERE id = ?";
 
         try {
-            Connection connection = Conection.getConnection();
+            Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, workedHours.getHoursId());
