@@ -1,8 +1,8 @@
-create database Facundo_Casaccio;
+
 use Facundo_Casaccio;
 
 CREATE TABLE users(
-	id int not null AUTO_INCREMENT,
+  id int not null AUTO_INCREMENT,
     name varchar(255) not null,
     surname varchar(255) not null,
     personal_id int not null,
@@ -11,15 +11,15 @@ CREATE TABLE users(
 ); 
 
 CREATE TABLE students(
-	id int not null AUTO_INCREMENT,
+  id int not null AUTO_INCREMENT,
     enrollment int not null,
     user_id int not null,
-	PRIMARY KEY (id),
+  PRIMARY KEY (id),
     FOREIGN KEY (user_id) references users (id)
 );
 
 CREATE TABLE proffessors(
-	id int not null AUTO_INCREMENT,
+  id int not null AUTO_INCREMENT,
     degree varchar(255) not null,
     user_id int not null,
     PRIMARY KEY(id),
@@ -27,7 +27,7 @@ CREATE TABLE proffessors(
 );
 
 CREATE TABLE employees(
-	id int not null AUTO_INCREMENT,
+  id int not null AUTO_INCREMENT,
     position varchar(255) not null,
     user_id int not null,
     PRIMARY KEY (id),
@@ -35,7 +35,7 @@ CREATE TABLE employees(
 );
 
 CREATE TABLE carreers(
-	id int not null AUTO_INCREMENT,
+  id int not null AUTO_INCREMENT,
     title varchar(255) not null UNIQUE,
     duration int not null,
     cost float not null,
@@ -43,13 +43,13 @@ CREATE TABLE carreers(
 );
 
 CREATE TABLE subjects(
-	id int not null AUTO_INCREMENT,
+  id int not null AUTO_INCREMENT,
     name varchar(255) not null UNIQUE,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE carreer_subject(
-	id int not null AUTO_INCREMENT,
+  id int not null AUTO_INCREMENT,
     carreer_id int not null,
     subject_id int not null,
     FOREIGN KEY (carreer_id) references carreers (id),
@@ -58,7 +58,7 @@ CREATE TABLE carreer_subject(
 );
 
 CREATE TABLE carreer_student(
-	id int not null AUTO_INCREMENT,
+  id int not null AUTO_INCREMENT,
     PRIMARY KEY (id),
     carreer_id int not null,
     student_id int not null,
@@ -67,7 +67,7 @@ CREATE TABLE carreer_student(
 );
 
 CREATE TABLE commissions(
-	id int not null AUTO_INCREMENT,
+  id int not null AUTO_INCREMENT,
     code varchar(255) not null,
     subject_id int not null,
     head int,
@@ -77,7 +77,7 @@ CREATE TABLE commissions(
 );
 
 CREATE TABLE commission_student(
-	id int not null AUTO_INCREMENT,
+  id int not null AUTO_INCREMENT,
     student_id int not null,
     commission_id int not null,
     PRIMARY KEY (id),
@@ -86,7 +86,7 @@ CREATE TABLE commission_student(
 );
 
 CREATE TABLE departments(
-	id int not null AUTO_INCREMENT,
+  id int not null AUTO_INCREMENT,
     area varchar(255) not null,
     head int, 
     PRIMARY KEY (id),
@@ -94,7 +94,7 @@ CREATE TABLE departments(
 );
 
 CREATE TABLE proffessor_department(
-	id int not null AUTO_INCREMENT,
+  id int not null AUTO_INCREMENT,
     proffessor_id int not null,
     department_id int not null,
     PRIMARY KEY (id),
@@ -103,7 +103,7 @@ CREATE TABLE proffessor_department(
 );
 
 CREATE TABLE exams(
-	id int not null AUTO_INCREMENT,
+  id int not null AUTO_INCREMENT,
     mark int not null,
     student_id int not null,
     subject_id int not null,
@@ -113,29 +113,28 @@ CREATE TABLE exams(
 );
 
 CREATE TABLE academic_record(
-	id int not null AUTO_INCREMENT, 
+  id int not null AUTO_INCREMENT, 
     student_id int not null,
     subject_id int not null,
     PRIMARY KEY (id),
-	FOREIGN KEY (student_id) references students (id),
+  FOREIGN KEY (student_id) references students (id),
     FOREIGN KEY (subject_id) references subjects (id),
     completed boolean not null,
     mark float
 );
 
 CREATE TABLE worked_hours(
-	id int not null AUTO_INCREMENT,
+  id int not null AUTO_INCREMENT,
     amount int,
     proffessor_id int,
     employee_id int,
-	month varchar(55),
+  month varchar(55),
     PRIMARY KEY (id),
     FOREIGN KEY (proffessor_id) references proffessors (id),
     FOREIGN KEY (employee_id) references employees (id)
 );
 
 -- Data insertion
-
 -- People
 INSERT into users (name, surname, personal_id, email) VALUES ('John', 'Wick', '398749', 'johnwick@gmail.com');
 INSERT into users (name, surname, personal_id, email) VALUES ('Homer', 'Simpson', '3218749', 'homer@gmail.com');
@@ -168,6 +167,7 @@ ALTER TABLE career_subject CHANGE carreer_id career_id int not null;
 ALTER TABLE proffessors RENAME TO professors;
 ALTER TABLE proffessor_department RENAME TO professor_department;
 ALTER TABLE professor_department CHANGE proffessor_id professor_id int not null;
+ALTER TABLE group_student CHANGE commission_id group_id int not null;
 
 -- Careers and subjects
 INSERT into careers (title, duration, cost) VALUES ('Physicist', 5, 100000);
@@ -204,16 +204,21 @@ SELECT s.id, u.name, u.surname, u.email, u.personal_id, s.enrollment FROM users 
 -- Show all users with and their degrees
 SELECT u.id, u.name, u.surname, p.degree FROM users u LEFT JOIN professors p on u.id = p.user_id;
 
-
 -- Students records
 INSERT INTO academic_record (student_id, subject_id, completed, mark) VALUES (3, 1, true, 10);
 INSERT INTO academic_record (student_id, subject_id, completed, mark) VALUES (4, 1, true, 8);
 INSERT INTO academic_record (student_id, subject_id, completed, mark) VALUES (2, 1, false, 2);
 INSERT INTO academic_record (student_id, subject_id, completed, mark) VALUES (5, 1, false, 5);
-INSERT INTO academic_record (student_id, subject_id, completed, mark) VALUES (1, 1, true, 9);
+INSERT INTO academic_recareerscord (student_id, subject_id, completed, mark) VALUES (1, 1, true, 9);
 
 -- Show students that passed math
 SELECT u.name, u.surname FROM users u 
-	JOIN students st on u.id = st.user_id 
+  JOIN students st on u.id = st.user_id 
     JOIN academic_record r on st.id = r.student_id
     JOIN subjects s on s.id = r.subject_id; 
+    
+SELECT id, name FROM subjects WHERE id = 1;
+SELECT id, name FROM subjects;
+SELECT * FROM users WHERE id = 2;
+
+SELECT s.user_id, s.id, u.name, u.surname, u.email, u.personal_id, s.enrollment FROM users u JOIN students s on u.id = s.user_id and s.id = 1;
