@@ -1,0 +1,22 @@
+<?xml-model href="universitydata.xsd"?>
+
+<campusupdate>
+    <student>
+        <userId>11</userId>
+        <name>John</name>
+        <surname>Travolta</surname>
+        <personalId>33872</personalId>
+        <email>johntravolta@gmail.com</email>
+        <studentId>23</studentId>
+        <enrollment>444839</enrollment>
+    </student>
+    <student>
+        <userId>12</userId>
+        <name>Tony</name>
+        <surname>Stark</surname>
+        <personalId>999483</personalId>
+        <email>ironman@gmail.com</email>
+        <studentId>27</studentId>
+        <enrollment>444833239</enrollment>
+    </student>
+</campusupdate>

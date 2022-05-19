@@ -1,10 +1,20 @@
 package domain;
 
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class User {
+    @XmlAttribute(name = "id")
     private int userId;
+    @XmlElement(name = "name")
     private String name;
+    @XmlElement(name = "surname")
     private String surname;
+    @XmlElement(name = "personalId")
     private int personalId;
+    @XmlElement(name = "email")
     private String email;
 
     public User (){

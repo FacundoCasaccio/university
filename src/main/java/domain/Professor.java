@@ -1,8 +1,17 @@
 package domain;
 
+
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Professor extends User{
+    @XmlAttribute(name = "id")
     private int professorId;
+    @XmlElement(name = "degree")
     private String degree;
+    @XmlElement(name = "workedHours")
     private WorkedHours workedHours;
 
     public Professor() {}

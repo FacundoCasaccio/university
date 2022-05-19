@@ -1,12 +1,21 @@
 package domain;
 
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@XmlRootElement
 public class Department {
+    @XmlAttribute(name = "id")
     private int departmentId;
+    @XmlElement(name = "area")
     private String area;
+    @XmlElement(name = "head")
     private Professor head;
+    @XmlElement(name = "professors")
     private List<Professor> professors;
 
     public Department() {};

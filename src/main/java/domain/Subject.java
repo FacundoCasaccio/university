@@ -1,7 +1,14 @@
 package domain;
 
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Subject {
+    @XmlAttribute(name = "id")
     private int subjectId;
+    @XmlElement(name = "name")
     private String name;
 
     public Subject() {}

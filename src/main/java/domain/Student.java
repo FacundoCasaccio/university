@@ -1,7 +1,12 @@
 package domain;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
+
 import java.util.List;
 
+@XmlRootElement(name = "student")
+@XmlType(propOrder = { "studentId", "name", "planesCapacity", "city" })
 public class Student extends User{
     private int studentId;
     private int enrollment;

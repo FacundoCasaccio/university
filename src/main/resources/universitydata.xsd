@@ -1,0 +1,234 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="campusupdate">
+        <xs:complexType>
+            <xs:sequence>
+
+    <xs:element name="students">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="student" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="userId" type="xs:int"/>
+                            <xs:element name="name" type="xs:string"/>
+                            <xs:element name="surname" type="xs:string"/>
+                            <xs:element name="personalId" type="xs:int"/>
+                            <xs:element name="email" type="xs:string"/>
+                            <xs:element name="studentId" type="xs:int"/>
+                            <xs:element name="enrollment" type="xs:int"/>
+                            <xs:element name="exams">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="exam" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="examId" type="xs:int"/>
+                                                    <xs:element name="mark" type="xs:double"/>
+                                                    <xs:element name="studentId" type="xs:int"/>
+                                                    <xs:element name="subject">
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+                                                                <xs:element name="subjectId" type="xs:int"/>
+                                                                <xs:element name="name" type="xs:double"/>
+                                                            </xs:sequence>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+                <xs:element name="professor">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="userId" type="xs:int"/>
+                            <xs:element name="name" type="xs:string"/>
+                            <xs:element name="surname" type="xs:string"/>
+                            <xs:element name="personalId" type="xs:int"/>
+                            <xs:element name="email" type="xs:string"/>
+                            <xs:element name="professorId" type="xs:int"/>
+                            <xs:element name="degree" type="xs:string"/>
+                            <xs:element name="workedHours">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="hoursId" type="xs:int"/>
+                                        <xs:element name="amount" type="xs:int"/>
+                                        <xs:element name="month" type="xs:string"/>
+                                        <xs:element name="professorId" type="xs:int"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="employee">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="userId" type="xs:int"/>
+                            <xs:element name="name" type="xs:string"/>
+                            <xs:element name="surname" type="xs:string"/>
+                            <xs:element name="personalId" type="xs:int"/>
+                            <xs:element name="email" type="xs:string"/>
+                            <xs:element name="employeeId" type="xs:int"/>
+                            <xs:element name="position" type="xs:string"/>
+                            <xs:element name="workedHours">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="hoursId" type="xs:int"/>
+                                        <xs:element name="amount" type="xs:int"/>
+                                        <xs:element name="month" type="xs:string"/>
+                                        <xs:element name="employeelId" type="xs:int"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="career">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="careerId" type="xs:int"/>
+                            <xs:element name="title" type="xs:string"/>
+                            <xs:element name="duration" type="xs:int"/>
+                            <xs:element name="cost" type="xs:double"/>
+                            <xs:element name="subjects">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="subject" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="subjectId" type="xs:int"/>
+                                                    <xs:element name="name" type="xs:double"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="students">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="student" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="userId" type="xs:int"/>
+                                                    <xs:element name="name" type="xs:string"/>
+                                                    <xs:element name="surname" type="xs:string"/>
+                                                    <xs:element name="personalId" type="xs:int"/>
+                                                    <xs:element name="email" type="xs:string"/>
+                                                    <xs:element name="studentId" type="xs:int"/>
+                                                    <xs:element name="enrollment" type="xs:int"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="department">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="departmentId" type="xs:int"/>
+                            <xs:element name="area" type="xs:string"/>
+                            <xs:element name="head">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="userId" type="xs:int"/>
+                                        <xs:element name="name" type="xs:string"/>
+                                        <xs:element name="surname" type="xs:string"/>
+                                        <xs:element name="personalId" type="xs:int"/>
+                                        <xs:element name="email" type="xs:string"/>
+                                        <xs:element name="professorId" type="xs:int"/>
+                                        <xs:element name="degree" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="professors">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="professor" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="userId" type="xs:int"/>
+                                                    <xs:element name="name" type="xs:string"/>
+                                                    <xs:element name="surname" type="xs:string"/>
+                                                    <xs:element name="personalId" type="xs:int"/>
+                                                    <xs:element name="email" type="xs:string"/>
+                                                    <xs:element name="professorId" type="xs:int"/>
+                                                    <xs:element name="degree" type="xs:string"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="group">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="groupId" type="xs:int"/>
+                            <xs:element name="groupCode" type="xs:string"/>
+                            <xs:element name="head">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="userId" type="xs:int"/>
+                                        <xs:element name="name" type="xs:string"/>
+                                        <xs:element name="surname" type="xs:string"/>
+                                        <xs:element name="personalId" type="xs:int"/>
+                                        <xs:element name="email" type="xs:string"/>
+                                        <xs:element name="professorId" type="xs:int"/>
+                                        <xs:element name="degree" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="subject">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="subjectId" type="xs:int"/>
+                                        <xs:element name="name" type="xs:double"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="students">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="student" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="userId" type="xs:int"/>
+                                                    <xs:element name="name" type="xs:string"/>
+                                                    <xs:element name="surname" type="xs:string"/>
+                                                    <xs:element name="personalId" type="xs:int"/>
+                                                    <xs:element name="email" type="xs:string"/>
+                                                    <xs:element name="studentId" type="xs:int"/>
+                                                    <xs:element name="enrollment" type="xs:int"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

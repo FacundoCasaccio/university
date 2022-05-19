@@ -1,12 +1,22 @@
 package domain;
 
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.util.List;
 
+@XmlRootElement
 public class Group {
+    @XmlAttribute(name = "id")
     private int groupId;
+    @XmlElement(name = "groupCode")
     private String groupCode;
+    @XmlElement(name = "head")
     private Professor head;
+    @XmlElement(name = "subject")
     private Subject subject;
+    @XmlElement(name = "students")
     private List<Student> students;
 
     public Group() {}
