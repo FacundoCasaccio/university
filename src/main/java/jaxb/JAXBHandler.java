@@ -1,6 +1,6 @@
 package jaxb;
 
-import domain.Student;
+import domain.Department;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
@@ -15,17 +15,17 @@ import java.io.IOException;
 public class JAXBHandler {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static void marshallStudent(Student student) throws JAXBException {
+    public static void marshallDepartment(Department department) throws JAXBException {
 
-        JAXBContext context = JAXBContext.newInstance(Student.class);
+        JAXBContext context = JAXBContext.newInstance(Department.class);
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        marshaller.marshal(student, new File("src/main/resources/jaxboutput.xml"));
+        marshaller.marshal(department, new File("src/main/resources/jaxboutput.xml"));
     }
 
-    public static Student unmarshallStudent(String path) throws JAXBException, IOException {
-        JAXBContext context = JAXBContext.newInstance(Student.class);
+    public static Department unmarshallDepartment(String path) throws JAXBException, IOException {
+        JAXBContext context = JAXBContext.newInstance(Department.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
-        return (Student) unmarshaller.unmarshal(new FileReader(path));
+        return (Department) unmarshaller.unmarshal(new FileReader(path));
     }
 }

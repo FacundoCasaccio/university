@@ -1,21 +1,17 @@
 package domain;
 
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@XmlRootElement
+@XmlRootElement(name = "department")
 public class Department {
-    @XmlAttribute(name = "id")
     private int departmentId;
-    @XmlElement(name = "area")
     private String area;
-    @XmlElement(name = "head")
     private Professor head;
-    @XmlElement(name = "professors")
+    @XmlElementWrapper(name = "professors")
+    @XmlElement(name = "professor")
     private List<Professor> professors;
 
     public Department() {};
@@ -37,10 +33,16 @@ public class Department {
         return departmentId;
     }
 
+    @XmlAttribute(name = "departmentId")
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
+    }
+
     public String getArea() {
         return area;
     }
 
+    @XmlElement(name = "area")
     public void setArea(String area) {
         this.area = area;
     }
@@ -49,6 +51,7 @@ public class Department {
         return head;
     }
 
+    @XmlElement(name = "head")
     public void setHead(Professor head) {
         this.head = head;
     }
@@ -56,6 +59,7 @@ public class Department {
     public List<Professor> getProfessors() {
         return professors;
     }
+
 
     public void setProfessors(ArrayList<Professor> professors) {
         this.professors = professors;

@@ -1,0 +1,40 @@
+{
+  "groupId" : 87,
+  "groupCode" : "AH93K7",
+  "head" : {
+    "userId": "99",
+    "name" : "Marcus",
+    "surname" : "Aurelius",
+    "personalId" : 62812,
+    "email" : "stoic@hotmail.com",
+    "professorId" : 773,
+    "degree" : "Legendary Stoic",
+    "workedHours" : null
+  },
+  "subject" : {
+    "subjectId" : 36,
+    "name" : "Stoic philosophy"
+  },
+  "students" : [
+    {
+      "userId": "332",
+      "name" : "Lucius",
+      "surname" : "Seneca",
+      "personalId" : 638,
+      "email" : "stoictoo@hotmail.com",
+      "studentId" : 543,
+      "enrollment" : 98312,
+      "exams" : null
+    },
+    {
+      "userId": "334",
+      "name" : "Zeno",
+      "surname" : "Citius",
+      "personalId" : 63298,
+      "email" : "stoictoo2@hotmail.com",
+      "studentId" : 547,
+      "enrollment" : 9831322,
+      "exams" : null
+    }
+  ]
+}

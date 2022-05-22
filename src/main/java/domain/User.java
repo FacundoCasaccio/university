@@ -1,22 +1,22 @@
 package domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class User {
-    @XmlAttribute(name = "id")
+    @JsonProperty
     private int userId;
-    @XmlElement(name = "name")
+    @JsonProperty
     private String name;
-    @XmlElement(name = "surname")
+    @JsonProperty
     private String surname;
-    @XmlElement(name = "personalId")
+    @JsonProperty
     private int personalId;
-    @XmlElement(name = "email")
+    @JsonProperty
     private String email;
-
     public User (){
 
     }
@@ -33,6 +33,7 @@ public class User {
         return userId;
     }
 
+    @XmlAttribute(name = "id")
     public void setUserId(int userId) {
         this.userId = userId;
     }
@@ -41,6 +42,7 @@ public class User {
         return name;
     }
 
+    @XmlElement(name = "name")
     public void setName(String name) {
         this.name = name;
     }
@@ -49,6 +51,7 @@ public class User {
         return surname;
     }
 
+    @XmlElement(name = "surname")
     public void setSurname(String surname) {
         this.surname = surname;
     }
@@ -57,6 +60,7 @@ public class User {
         return personalId;
     }
 
+    @XmlElement(name = "personalId")
     public void setPersonalId(int personalId) {
         this.personalId = personalId;
     }
@@ -65,14 +69,14 @@ public class User {
         return email;
     }
 
+    @XmlElement(name = "email")
     public void setEmail(String email) {
         this.email = email;
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "userId=" + userId +
+        return  "userId=" + userId +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", personalId=" + personalId +

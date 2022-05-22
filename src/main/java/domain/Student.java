@@ -1,15 +1,15 @@
 package domain;
 
-import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-@XmlRootElement(name = "student")
-@XmlType(propOrder = { "studentId", "name", "planesCapacity", "city" })
 public class Student extends User{
+    @JsonProperty
     private int studentId;
+    @JsonProperty
     private int enrollment;
+    @JsonProperty
     private List<Exam> exams;
 
     public Student(){}
@@ -46,8 +46,9 @@ public class Student extends User{
 
     @Override
     public String toString() {
-        return super.toString() + "Student{" +
-                "studentId=" + studentId +
+        return "Student{" +
+                "studentId=" + studentId + " " +
+                super.toString() +
                 ", enrollment=" + enrollment +
                 ", exams=" + exams +
                 '}';

@@ -1,17 +1,17 @@
 package domain;
 
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+@XmlRootElement(name = "professor")
 public class Professor extends User{
-    @XmlAttribute(name = "id")
+    @JsonProperty
     private int professorId;
-    @XmlElement(name = "degree")
+    @JsonProperty
     private String degree;
-    @XmlElement(name = "workedHours")
+    @JsonProperty
     private WorkedHours workedHours;
 
     public Professor() {}
@@ -26,6 +26,7 @@ public class Professor extends User{
         return this.professorId;
     }
 
+    @XmlAttribute(name = "professorId")
     public void setProfessorId(int professorId) {
         this.professorId = professorId;
     }
@@ -34,15 +35,26 @@ public class Professor extends User{
         return this.degree;
     }
 
+    @XmlElement(name = "degree")
     public void setDegree(String degree) {
         this.degree = degree;
     }
 
+
+    public WorkedHours getWorkedHours() {
+        return workedHours;
+    }
+
+    public void setWorkedHours(WorkedHours workedHours) {
+        this.workedHours = workedHours;
+    }
+
     @Override
     public String toString() {
-        return super.toString() + "Professor{" +
+        return "Professor{" +
                 "professorId=" + professorId +
                 ", degree='" + degree + '\'' +
+                ", workedHours=" + workedHours +
                 '}';
     }
 }

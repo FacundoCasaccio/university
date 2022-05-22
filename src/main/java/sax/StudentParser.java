@@ -25,7 +25,7 @@ public class StudentParser extends DefaultHandler {
     private static final String SUBJECT_ID = "subjectId";
 
     private Student student;
-    private StringBuilder elementValue;
+    private StringBuilder elementValue = new StringBuilder();
 
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
@@ -37,37 +37,42 @@ public class StudentParser extends DefaultHandler {
     public void startDocument() throws SAXException {
         student = new Student();
     }
+    @Override
+    public void endDocument() throws SAXException {
+        System.out.println(student);
+    }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attr) throws SAXException {
         super.startElement(uri, localName, qName, attr);
 
-        if (localName.equals(STUDENT)) {
+        if (qName.equals(STUDENT)) {
             student = new Student();
-        } else if (localName.equals(EXAMS)) {
+        } else if (qName.equals(EXAMS)) {
             student.setExams(new ArrayList<>());
-        } else if (localName.equals(EXAM)) {
+        } else if (qName.equals(EXAM)) {
             student.getExams().add(new Exam());
         }
 
         //Clear buffer
         elementValue.setLength(0);
     }
-        @Override
+
+    @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
         super.endElement(uri, localName, qName);
 
-            if (localName.equals(NAME)) {
-                student.setName(elementValue.toString());
-            } else if (localName.equals(SURNAME)) {
-                student.setSurname(elementValue.toString());
-            } else if (localName.equals(PERSONAL_ID)) {
-                student.setPersonalId(Integer.parseInt(elementValue.toString()));
-            } else if (localName.equals(EMAIL)) {
-                student.setEmail(elementValue.toString());
-            } else if (localName.equals(ENROLLMENT)) {
-                student.setEnrollment(Integer.parseInt(elementValue.toString()));
-            }
+        if (qName.equals(NAME)) {
+            student.setName(elementValue.toString());
+        } else if (qName.equals(SURNAME)) {
+            student.setSurname(elementValue.toString());
+        } else if (qName.equals(PERSONAL_ID)) {
+            student.setPersonalId(Integer.parseInt(elementValue.toString()));
+        } else if (qName.equals(EMAIL)) {
+            student.setEmail(elementValue.toString());
+        } else if (qName.equals(ENROLLMENT)) {
+            student.setEnrollment(Integer.parseInt(elementValue.toString()));
+        }
     }
 
     public Student getStudent() {

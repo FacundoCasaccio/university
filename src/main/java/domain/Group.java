@@ -1,22 +1,19 @@
 package domain;
 
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-@XmlRootElement
 public class Group {
-    @XmlAttribute(name = "id")
+    @JsonProperty
     private int groupId;
-    @XmlElement(name = "groupCode")
+    @JsonProperty
     private String groupCode;
-    @XmlElement(name = "head")
+    @JsonProperty
     private Professor head;
-    @XmlElement(name = "subject")
+    @JsonProperty
     private Subject subject;
-    @XmlElement(name = "students")
+    @JsonProperty
     private List<Student> students;
 
     public Group() {}

@@ -1,18 +1,9 @@
 package domain;
 
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
 public class Exam {
-    @XmlAttribute(name = "id")
     private int examId;
-    @XmlElement(name = "mark")
     private double mark;
-    @XmlElement(name = "subject")
     private Subject subject;
-    @XmlElement(name = "studentId")
     private int student_id;
 
     public Exam() {};
