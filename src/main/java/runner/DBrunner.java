@@ -1,16 +1,10 @@
 package runner;
 
 import connection.ConnectionPool;
-import domain.Professor;
 import domain.Student;
-import domain.Subject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import service.ProfessorService;
 import service.StudentService;
-import service.SubjectService;
-
-import java.util.List;
 
 import static connection.DAOConnection.getConnectionPool;
 
@@ -22,16 +16,16 @@ public class DBrunner {
 
 //        //Select a student
         StudentService studentService = new StudentService();
-//        Student studentOne = studentService.getStudentById(1);
-//        LOGGER.info(studentOne);
+        Student studentOne = studentService.getStudentById(1);
+        LOGGER.info(studentOne);
 //
 //        //Select all students
 //        List<Student> studentList = studentService.getAllStudents();
 //        LOGGER.info(studentList);
 
         //Return full student
-        Student studentThree = studentService.getFullStudentInfoById(1);
-        LOGGER.info(studentThree);
+//        Student studentThree = studentService.getFullStudentInfoById(1);
+//        LOGGER.info(studentThree);
 
 //        //Select a professor
 //        ProfessorService professorService = new ProfessorService();
