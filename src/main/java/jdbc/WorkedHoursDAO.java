@@ -1,6 +1,7 @@
-package dao;
+package jdbc;
 
 import connection.ConnectionPool;
+import dao.IWorkedHoursDAO;
 import domain.WorkedHours;
 
 import java.sql.Connection;
@@ -12,7 +13,7 @@ import java.util.List;
 
 import static connection.DAOConnection.getConnectionPool;
 
-public class WorkedHoursDAO implements DAO<WorkedHours>{
+public class WorkedHoursDAO implements IWorkedHoursDAO {
     private ConnectionPool connectionPool = getConnectionPool();
     @Override
     public WorkedHours select(int id) {

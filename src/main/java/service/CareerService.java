@@ -1,8 +1,6 @@
 package service;
 
-import dao.CareerDAO;
-import dao.StudentDAO;
-import dao.SubjectDAO;
+import jdbc.CareerDAO;
 import domain.Career;
 import domain.Student;
 import domain.Subject;

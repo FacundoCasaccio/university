@@ -1,7 +1,11 @@
-package dao;
+package jdbc;
 
 import connection.ConnectionPool;
-import domain.*;
+import dao.IGroupDAO;
+import domain.Group;
+import domain.Professor;
+import domain.Student;
+import domain.Subject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +16,7 @@ import java.util.List;
 
 import static connection.DAOConnection.getConnectionPool;
 
-public class GroupDAO implements DAO<Group>{
+public class GroupDAO implements IGroupDAO {
     private ConnectionPool connectionPool = getConnectionPool();
     @Override
     public Group select(int id) {

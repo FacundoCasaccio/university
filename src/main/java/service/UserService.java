@@ -1,6 +1,6 @@
 package service;
 
-import dao.UserDAO;
+import jdbc.UserDAO;
 import domain.User;
 
 import java.util.Comparator;

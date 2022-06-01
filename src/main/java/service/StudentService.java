@@ -1,7 +1,7 @@
 package service;
 
-import dao.ExamDAO;
-import dao.StudentDAO;
+import jdbc.ExamDAO;
+import jdbc.StudentDAO;
 import domain.Exam;
 import domain.Student;
 

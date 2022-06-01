@@ -1,6 +1,7 @@
-package dao;
+package jdbc;
 
 import connection.ConnectionPool;
+import dao.ISubjectDAO;
 import domain.Subject;
 
 import java.sql.Connection;
@@ -12,7 +13,7 @@ import java.util.List;
 
 import static connection.DAOConnection.getConnectionPool;
 
-public class SubjectDAO implements DAO<Subject> {
+public class SubjectDAO implements ISubjectDAO {
     private ConnectionPool connectionPool = getConnectionPool();
     @Override
     public Subject select(int id) {

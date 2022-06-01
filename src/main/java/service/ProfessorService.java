@@ -1,6 +1,6 @@
 package service;
 
-import dao.ProfessorDAO;
+import jdbc.ProfessorDAO;
 import domain.Professor;
 
 import java.util.Comparator;

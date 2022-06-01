@@ -1,6 +1,7 @@
-package dao;
+package jdbc;
 
 import connection.ConnectionPool;
+import dao.IDepartmentDAO;
 import domain.Department;
 import domain.Professor;
 
@@ -13,7 +14,7 @@ import java.util.List;
 
 import static connection.DAOConnection.getConnectionPool;
 
-public class DepartmentDAO implements DAO<Department> {
+public class DepartmentDAO implements IDepartmentDAO {
     private ConnectionPool connectionPool = getConnectionPool();
     @Override
     public Department select(int id) {
@@ -121,7 +122,7 @@ public class DepartmentDAO implements DAO<Department> {
 
     @Override
     public void delete(Department department) {
-        String query = "DELETE FROM subjects WHERE id = ?";
+        String query = "DELETE FROM departments WHERE id = ?";
 
         try {
             Connection connection = connectionPool.getConnection();

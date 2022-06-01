@@ -1,0 +1,30 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.ISubjectDAO">
+    <resultMap id="subjectResultMap" type="domain.Subject" autoMapping="false">
+        <result column="id" property="subjectId"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+    <select id="select" parameterType="int" resultMap="subjectResultMap">
+        SELECT id, name FROM subjects WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="subjectResultMap">
+        SELECT id, name FROM subjects
+    </select>
+
+    <insert id="insert" parameterType="domain.Subject">
+        INSERT INTO subjects (name) VALUES (#{name})
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM subjects WHERE id = #{id}
+    </delete>
+
+    <update id="update">
+        UPDATE subjects SET name = #{name} WHERE id = #{id}
+    </update>
+</mapper>

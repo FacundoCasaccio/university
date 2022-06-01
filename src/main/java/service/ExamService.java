@@ -1,6 +1,6 @@
 package service;
 
-import dao.ExamDAO;
+import jdbc.ExamDAO;
 import domain.Exam;
 
 import java.util.List;

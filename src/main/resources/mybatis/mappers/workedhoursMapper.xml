@@ -1,0 +1,35 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.IWorkedHoursDAO">
+    <resultMap id="workedHoursResultMap" type="domain.WorkedHours" autoMapping="false">
+        <result column="id" property="hoursId"/>
+        <result column="amount" property="amount"/>
+        <result column="month" property="month"/>
+        <result column="professor_id" property="professorId"/>
+        <result column="employee_id" property="employeeId"/>
+    </resultMap>
+
+    <select id="select" parameterType="int" resultMap="workedHoursResultMap">
+        SELECT id, amount, month, professor_id, employee_id FROM worked_hours WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="workedHoursResultMap">
+        SELECT id, amount, month, professor_id, employee_id FROM worked_hours
+    </select>
+
+    <insert id="insert" parameterType="domain.WorkedHours">
+        INSERT INTO worked_hours (amount, professor_id, employee_id, month)
+        VALUES (#{workedHours.amount}, #{workedHours.professorId}, #{workedHours.employeeId}, #{workedHours.month})
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM worked_hours WHERE id = #{id}
+    </delete>
+
+    <update id="update">
+        UPDATE worked_hours SET amount = #{workedHours.amount}, professor_id = #{workedHours.professorId},
+        employee_Id = #{workedHours.employeeId}, month = #{workedHours.month} WHERE id = #{id}
+    </update>
+</mapper>

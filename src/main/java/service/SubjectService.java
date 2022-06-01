@@ -1,6 +1,6 @@
 package service;
 
-import dao.SubjectDAO;
+import jdbc.SubjectDAO;
 import domain.Subject;
 
 import java.util.List;

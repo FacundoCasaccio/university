@@ -1,0 +1,33 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.IExamDAO">
+    <resultMap id="examResultMap" type="domain.Exam" autoMapping="false">
+        <result column="id" property="examId"/>
+        <result column="mark" property="mark"/>
+        <result column="student_id" property="student.studentId"/>
+        <result column="subject_id" property="subject.subjectId"/>
+        <result column="subject_name" property="subject.name"/>
+    </resultMap>
+
+    <select id="select" parameterType="int" resultMap="examResultMap">
+        SELECT e.id, e.mark, e.student_id, e.subject_id, s.name FROM exams e JOIN subjects s on e.subject_id = s.id WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="examResultMap">
+        SELECT e.id, e.mark, e.subject_id, s.name FROM exams e JOIN subjects s on e.subject_id = s.id
+    </select>
+
+    <insert id="insert" parameterType="domain.Exam">
+        INSERT INTO exams (mark, subject_id, student_id) VALUES (#{exam.mark}, #{exam.subject.subjectId}, #{exam.student.studentId})
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM users u JOIN students s on u.id = s.user_id WHERE u.id = #{id}
+    </delete>
+
+    <update id="update">
+        UPDATE exams SET mark = #{exam.mark}, student_id = #{exam.student.studenId}, subject_id = #{exam.subject.subjectId} WHERE id = #{id}
+    </update>
+</mapper>

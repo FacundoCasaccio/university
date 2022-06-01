@@ -1,13 +1,14 @@
-package dao;
+package jdbc;
 
 import connection.ConnectionPool;
+import dao.IAcademicRecordDAO;
 import domain.AcademicRecord;
 
 import java.util.List;
 
 import static connection.DAOConnection.getConnectionPool;
 
-public class AcademicRecordDAO implements DAO<AcademicRecord> {
+public class AcademicRecordDAO implements IAcademicRecordDAO {
     private ConnectionPool connectionPool = getConnectionPool();
     @Override
     public AcademicRecord select(int id) {

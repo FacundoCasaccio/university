@@ -1,6 +1,6 @@
 package service;
 
-import dao.DepartmentDAO;
+import jdbc.DepartmentDAO;
 import domain.Department;
 import domain.Professor;
 

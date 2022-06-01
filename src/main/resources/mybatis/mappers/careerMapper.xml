@@ -1,0 +1,57 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.ICareerDAO">
+    <resultMap id="careerResultMap" type="domain.Career" autoMapping="false">
+        <result column="id" property="careerId"/>
+        <result column="title" property="title"/>
+        <result column="duration" property="duration"/>
+        <result column="cost" property="cost"/>
+    </resultMap>
+
+    <resultMap id="studentResultMap" type="domain.Student" autoMapping="false">
+        <result column="user_id" property="userId"/>
+        <result column="name" property="name"/>
+        <result column="surname" property="surname"/>
+        <result column="email" property="email"/>
+        <result column="personal_id" property="personalId"/>
+        <result column="id" property="studentId"/>
+        <result column="enrollment" property="enrollment"/>
+    </resultMap>
+
+    <resultMap id="subjectResultMap" type="domain.Subject" autoMapping="false">
+        <result column="id" property="subjectId"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+    <select id="select" parameterType="int" resultMap="careerResultMap">
+        SELECT id, title, duration, cost FROM careers WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="careerResultMap">
+        SELECT id, title, duration, cost FROM careers
+    </select>
+
+    <select id="selectCareerSubjects" resultMap="subjectResultMap">
+        SELECT s.id, s.name FROM subjects s JOIN career_subject cs on cs.subject_id = s.id and cs.career_id = #{career.careerId}
+    </select>
+
+    <select id="selectCareerStudents" resultMap="studentResultMap">
+        "SELECT s.user_id, s.id, u.name, u.surname, u.email, u.personal_id, s.enrollment FROM users u " +
+        "RIGHT JOIN students s on u.id = s.user_id " +
+        "JOIN career_student cs on cs.student_id = s.id and cs.career_id = #{career.id};
+    </select>
+
+    <insert id="insert" parameterType="domain.Career">
+        INSERT INTO careers (title, duration, cost) VALUES (#{career.title}, #{career.duration}, #{career.cost})
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM careers WHERE id = #{id}
+    </delete>
+
+    <update id="update">
+        UPDATE careers SET title = #{career.title}, duration = #{career.duration}, cost = #{career.cost} WHERE id = #{id}
+    </update>
+</mapper>

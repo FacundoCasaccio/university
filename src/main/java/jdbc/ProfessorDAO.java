@@ -1,7 +1,8 @@
-package dao;
+package jdbc;
 
 import connection.ConnectionPool;
-import domain.Employee;
+import dao.IProfessorDAO;
+import domain.Professor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,12 +13,12 @@ import java.util.List;
 
 import static connection.DAOConnection.getConnectionPool;
 
-public class EmployeeDAO implements DAO<Employee> {
+public class ProfessorDAO implements IProfessorDAO {
     private ConnectionPool connectionPool = getConnectionPool();
     @Override
-    public Employee select(int id) {
-        String query = "SELECT e.user_id, e.id, u.name, u.surname, u.email, u.personal_id, e.position FROM users u JOIN employees e on u.id = e.user_id and e.id = " + id;
-        Employee employee;
+    public Professor select(int id) {
+        String query = "SELECT p.user_id, p.id, u.name, u.surname, u.email, u.personal_id, p.degree FROM users u JOIN professors p on u.id = p.user_id and p.id = " + id;
+        Professor professor;
 
         try {
             Connection connection = connectionPool.getConnection();
@@ -31,21 +32,21 @@ public class EmployeeDAO implements DAO<Employee> {
             String surname = resultSet.getString("surname");
             String email = resultSet.getString("email");
             int personalId = resultSet.getInt("personal_id");
-            String position = resultSet.getString("position");
+            String degree = resultSet.getString("degree");
 
-            employee = new Employee(userId, name, surname, personalId, email, professorId, position);
+            professor = new Professor(userId, name, surname, personalId, email, professorId, degree);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return employee;
+        return professor;
     }
 
     @Override
-    public List<Employee> selectAll() {
-        String query = "SELECT e.user_id, e.id, u.name, u.surname, u.email, u.personal_id, e.position FROM users u RIGHT JOIN employees e on u.id = e.user_id";
-        List<Employee> employees = new ArrayList<>();
-        Employee employee;
+    public List<Professor> selectAll() {
+        String query = "SELECT p.user_id, p.id, u.name, u.surname, u.email, u.personal_id, p.degree FROM users u RIGHT JOIN professors p on u.id = p.user_id";
+        List<Professor> professors = new ArrayList<>();
+        Professor professor;
 
         try {
             Connection connection = connectionPool.getConnection();
@@ -59,27 +60,27 @@ public class EmployeeDAO implements DAO<Employee> {
                 String surname = resultSet.getString("surname");
                 String email = resultSet.getString("email");
                 int personalId = resultSet.getInt("personal_id");
-                String position = resultSet.getString("position");
+                String degree = resultSet.getString("degree");
 
-                employee = new Employee(userId, name, surname, personalId, email, professorId, position);
-                employees.add(employee);
+                professor = new Professor(userId, name, surname, personalId, email, professorId, degree);
+                professors.add(professor);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return employees;
+        return professors;
     }
 
     @Override
-    public void insert(Employee employee) {
-        String query = "INSERT into employees (user_id, position) VALUES (?, ?)";
+    public void insert(Professor professor) {
+        String query = "INSERT into professors (user_id, degree) VALUES (?, ?)";
 
         try {
             Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
-            statement.setInt(1, employee.getUserId());
-            statement.setString(2, employee.getPosition());
+            statement.setInt(1, professor.getUserId());
+            statement.setString(2, professor.getDegree());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -87,19 +88,19 @@ public class EmployeeDAO implements DAO<Employee> {
     }
 
     @Override
-    public void update(Employee employee, int id) {
-        String query = "UPDATE users u JOIN employees e on u.id = e.user_id SET u.name = ?, u.surname = ?, u.email = ?, u.personal_id = ?, e.position = ? WHERE u.id = ?";
+    public void update(Professor professor, int id) {
+        String query = "UPDATE users u JOIN professors p on u.id = p.user_id SET u.name = ?, u.surname = ?, u.email = ?, u.personal_id = ?, p.degree = ? WHERE u.id = ?";
 
         try {
             Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
-            statement.setInt(1, employee.getUserId());
-            statement.setString(2, employee.getName());
-            statement.setString(3, employee.getSurname());
-            statement.setString(4, employee.getEmail());
-            statement.setInt(5, employee.getPersonalId());
-            statement.setString(6, employee.getPosition());
+            statement.setInt(1, professor.getUserId());
+            statement.setString(2, professor.getName());
+            statement.setString(3, professor.getSurname());
+            statement.setString(4, professor.getEmail());
+            statement.setInt(5, professor.getPersonalId());
+            statement.setString(6, professor.getDegree());
             statement.setInt(7, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -108,14 +109,14 @@ public class EmployeeDAO implements DAO<Employee> {
     }
 
     @Override
-    public void delete(Employee employee) {
-        String query = "DELETE FROM users u JOIN employees e on u.id = e.user_id WHERE u.id = ?";
+    public void delete(Professor professor) {
+        String query = "DELETE FROM users u JOIN professors p on u.id = p.user_id WHERE u.id = ?";
 
         try {
             Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
-            statement.setInt(1, employee.getUserId());
+            statement.setInt(1, professor.getUserId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

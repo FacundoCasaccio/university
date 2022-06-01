@@ -1,6 +1,7 @@
-package dao;
+package jdbc;
 
 import connection.ConnectionPool;
+import dao.ICareerDAO;
 import domain.Career;
 import domain.Student;
 import domain.Subject;
@@ -14,7 +15,7 @@ import java.util.List;
 
 import static connection.DAOConnection.getConnectionPool;
 
-public class CareerDAO implements DAO<Career>{
+public class CareerDAO implements ICareerDAO {
     private ConnectionPool connectionPool = getConnectionPool();
     @Override
     public Career select(int id) {

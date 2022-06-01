@@ -1,7 +1,6 @@
 package service;
 
-import dao.GroupDAO;
-import dao.StudentDAO;
+import jdbc.GroupDAO;
 import domain.Group;
 import domain.Student;
 

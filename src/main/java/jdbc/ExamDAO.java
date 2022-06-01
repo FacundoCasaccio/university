@@ -1,6 +1,7 @@
-package dao;
+package jdbc;
 
 import connection.ConnectionPool;
+import dao.IExamDAO;
 import domain.Exam;
 import domain.Subject;
 
@@ -13,7 +14,7 @@ import java.util.List;
 
 import static connection.DAOConnection.getConnectionPool;
 
-public class ExamDAO implements DAO<Exam>{
+public class ExamDAO implements IExamDAO {
     private ConnectionPool connectionPool = getConnectionPool();
 
     @Override

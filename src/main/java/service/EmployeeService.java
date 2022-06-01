@@ -1,8 +1,7 @@
 package service;
 
-import dao.EmployeeDAO;
+import jdbc.EmployeeDAO;
 import domain.Employee;
-import domain.Professor;
 
 import java.util.Comparator;
 import java.util.List;

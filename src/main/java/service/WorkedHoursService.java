@@ -1,6 +1,6 @@
 package service;
 
-import dao.WorkedHoursDAO;
+import jdbc.WorkedHoursDAO;
 import domain.WorkedHours;
 
 import java.util.List;
