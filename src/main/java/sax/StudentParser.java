@@ -19,10 +19,6 @@ public class StudentParser extends DefaultHandler {
     private static final String ENROLLMENT = "enrollment";
     private static final String EXAMS = "exams";
     private static final String EXAM = "exam";
-    private static final String EXAM_ID = "examId";
-    private static final String MARK = "mark";
-    private static final String SUBJECT = "subject";
-    private static final String SUBJECT_ID = "subjectId";
 
     private Student student;
     private StringBuilder elementValue = new StringBuilder();

@@ -13,7 +13,7 @@ public class JacksonHandler {
     private static ObjectMapper objectMapper = new ObjectMapper();
 
     public static void writeGroup(Group group) {
-        File file = new File("src/main/resources/jsonoutput.json");
+        File file = new File("src/main/resources/jackson/jsonoutput.json");
 
         if (!file.exists()) {
             try {
@@ -31,7 +31,7 @@ public class JacksonHandler {
     }
 
     public static Group readGroup() {
-        File file = new File("src/main/resources/groupdata.json");
+        File file = new File("src/main/resources/jackson/groupdata.json");
         Group group;
 
         try {

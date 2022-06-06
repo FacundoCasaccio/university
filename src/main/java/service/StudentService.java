@@ -1,16 +1,17 @@
 package service;
 
-import jdbc.ExamDAO;
-import jdbc.StudentDAO;
+import dao.IStudentDAO;
+import designpatterns.DaoFactory;
 import domain.Exam;
 import domain.Student;
+import jdbc.ExamDAO;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class StudentService {
-    private final StudentDAO studentDAO = new StudentDAO();
+    private final IStudentDAO studentDAO = (IStudentDAO) DaoFactory.getDao("student");
 
     public Student getStudentById(int id) {
         return this.studentDAO.select(id);

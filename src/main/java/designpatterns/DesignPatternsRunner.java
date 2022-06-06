@@ -1,9 +1,6 @@
-package mybatis;
+package designpatterns;
 
 import dao.IStudentDAO;
-import designpatterns.AbstractFactory;
-import designpatterns.MyBatisFactory;
-import designpatterns.StudentBuilder;
 import domain.Student;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;

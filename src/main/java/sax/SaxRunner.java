@@ -15,6 +15,6 @@ public class SaxRunner {
         XMLReader xr = factory.newSAXParser().getXMLReader();
         StudentParser studentParser = new StudentParser();
         xr.setContentHandler(studentParser);
-        xr.parse(new InputSource("src/main/resources/universitydata.xml"));
+        xr.parse(new InputSource("src/main/resources/sax/universitydata.xml"));
     }
 }

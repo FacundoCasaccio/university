@@ -1,4 +1,5 @@
 .idea
 target
 /target
-resources/jsonoutput.json
+src/main/resources/jaxboutput.xml
+src/main/resources/jackson/jsonoutput.json
